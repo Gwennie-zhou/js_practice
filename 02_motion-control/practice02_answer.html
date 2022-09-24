@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>motion control</title>
+    <link rel="stylesheet" href="./practice02.css">
+</head>
+<body>
+    <div id="jsContainer">
+        <table class="game">
+            <tbody>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td class="current"></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const con = document.querySelector('#jsContainer')
+
+        //TODO: Please implement motion control.
+        document.onkeydown = event => {
+            let code = event.keyCode || ''
+            if (![37, 38, 39, 40].includes(code)) return
+            event.preventDefault && event.preventDefault()
+
+            const cur = con.querySelector('.current')
+            const xLength = con.querySelectorAll('tr')[0].children.length;
+            const yLength = con.querySelectorAll('tr').length
+
+            let x = cur.cellIndex;
+            let y = cur.parentNode.sectionRowIndex;
+            
+            con.querySelector('tbody').children[y].children[x].classList.remove('current')
+
+            switch(code) {
+                case 38: //up
+                    y = y === 0 ? yLength - 1 : y - 1;
+                    break;
+                case 40: //down
+                    y = y === yLength -1 ? 0 : y + 1;
+                    break;
+                case 37: //left
+                    x = x === 0 ? xLength - 1 : x - 1;
+                    break;
+                case 39: //right
+                    x = x === xLength - 1 ? 0 : x + 1;
+                    break;
+            }
+
+            con.querySelector('tbody').children[y].children[x].classList.add('current')
+        };
+
+    </script>
+</body>
+</html>
